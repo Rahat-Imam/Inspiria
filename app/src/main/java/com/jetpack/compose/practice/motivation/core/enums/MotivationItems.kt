@@ -5,7 +5,8 @@ import com.jetpack.compose.practice.motivation.R
 
 
 enum class MotivationItems(
-    @DrawableRes val icon:Int,
+    @DrawableRes val lightIcon:Int,
+    @DrawableRes val darkIcon:Int,
     val point1:String,
     val point2:String?,
     val point3:String?,
@@ -15,6 +16,7 @@ enum class MotivationItems(
 
     Article1(
         R.drawable.icon_article,
+        R.drawable.icon_article_dark,
         "Sources of Motivation",
         "How to Set and Accomplish Goals",
         "How to Increase Motivation",
@@ -24,6 +26,7 @@ enum class MotivationItems(
 
     Article2(
         R.drawable.icon_article,
+        R.drawable.icon_article_dark,
         "What Motivation Is and How Motivation Works",
         "How to Get Motivated and Take Action",
         "How to Stay Motivated for the Long-Run",
@@ -34,6 +37,7 @@ enum class MotivationItems(
 
     Article3(
         R.drawable.icon_article,
+        R.drawable.icon_article_dark,
         "15 Tips to Get Motivated on Your Own",
         "Understanding Causes Lack of Motivation",
         "Think of the end rather than the beginning",
@@ -43,6 +47,7 @@ enum class MotivationItems(
 
     Article4(
         R.drawable.icon_article,
+        R.drawable.icon_article_dark,
         "10 Inspirational Stories to Develop Empathy, Critical Thinking, and Heightened Perspective",
         null, null,null,
         "https://leaders.com/articles/books/short-motivational-stories/"

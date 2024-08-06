@@ -22,7 +22,11 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,16 +37,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jetpack.compose.practice.motivation.R
 import com.jetpack.compose.practice.motivation.core.enums.MotivationItems
+import com.jetpack.compose.practice.motivation.core.enums.Theme
 import com.jetpack.compose.practice.motivation.core.extension.read
 import com.jetpack.compose.practice.motivation.core.extension.share
+import com.jetpack.compose.practice.motivation.core.utils.Preferences
 import com.jetpack.compose.practice.motivation.ui.theme.PoppinsFontMedium
 import com.jetpack.compose.practice.motivation.ui.theme.PoppinsFontRegular
 import com.jetpack.compose.practice.motivation.ui.theme.PoppinsFontSemiBold
+import kotlinx.coroutines.flow.first
+import org.koin.androidx.compose.inject
 
 
 @Composable
 fun MotivationGridItem(motivationItem: MotivationItems, context: Context, onItemSelected: (MotivationItems) -> Unit) {
 
+    val prefs: Preferences by inject()
+    var themeValue by remember { mutableStateOf(false) }
+    LaunchedEffect(key1 = Theme.Light) {
+        themeValue = prefs.getIsDarkTheme().first()
+    }
 
     Card(
         shape = RoundedCornerShape(10.dp),
@@ -60,15 +73,23 @@ fun MotivationGridItem(motivationItem: MotivationItems, context: Context, onItem
 
         Column(
             Modifier
-                .background(MaterialTheme.colorScheme.background)
+                .background(MaterialTheme.colorScheme.onSecondary)
                 .fillMaxSize()
         ) {
             Row{
                 Image(
-                    painter = painterResource(id = motivationItem.icon),
+
+                    painter = painterResource(
+                        id =
+                        if(themeValue){
+                            motivationItem.darkIcon
+                        }
+                        else {
+                            motivationItem.lightIcon
+                        }),
+
                     contentDescription = null,
                     modifier = Modifier.padding(10.dp)
-
                 )
                 Column(
                     Modifier.fillMaxWidth()
@@ -253,7 +274,6 @@ fun MotivationGridItem(motivationItem: MotivationItems, context: Context, onItem
                     }
                 }
             }
-
         }
     }
 }
